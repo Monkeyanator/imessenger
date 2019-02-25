@@ -48,11 +48,11 @@ fi
 
 if [ -z "$MESSAGE" ]; then
     # read msg from stdin if none provided
-    STDIN=$(cat)
-    if [ -z "$STDIN" ]; then
+    if [ ! -p /dev/stdin ]; then
         echo "Message not specified, check command usage"; exit 1;
     fi
-    MESSAGE=$STDIN
+
+    read MESSAGE
 fi
 
 OSASCRIPT_SEND_TEMPLATE="$OSASCRIPT -e 'tell application \"Messages\" to send \"$MESSAGE\" to buddy \"$RECIPIENT\"'"
